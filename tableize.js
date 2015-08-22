@@ -40,6 +40,16 @@ function columnSize(array){
 var peopleColumns = columnSize(peopleLinesArray);
 console.log(peopleColumns);
 
+function whiteSpace(word, columnLength){
+  var string = word;
+  for (var i = word.length; i <= columnLength; i++) {
+    string += ' ';
+  }
+  return string + '|';
+}
+
+console.log(whiteSpace('test', 8)+whiteSpace('test', 8));
+
 
 //try to output the grid system first, use the setCharAt, with the output from columnSize
 
@@ -55,3 +65,5 @@ console.log(peopleColumns);
 // }
 
 // makeGrid(peopleColumns);
+
+//create strings
