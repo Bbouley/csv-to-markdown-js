@@ -1,14 +1,13 @@
 var data = require('./strings');
 var people = data.mvp.people;
 var companies = data.mvp.companies;
+var stretchCompanies = data.stretch.companies;
 
 
 function splitToLines(string){
   var output = string.split('\n');
   return output;
 }
-
-var peopleLines =  splitToLines(people);
 
 function sortByLines(array){
   var eachWord = [];
@@ -18,10 +17,6 @@ function sortByLines(array){
   }
   return eachWord;
 }
-
-var peopleLinesArray = sortByLines(peopleLines);
-console.log(peopleLinesArray);
-
 
 function columnSize(array){
   lengthArray = [];
@@ -37,33 +32,54 @@ function columnSize(array){
   return lengthArray;
 }
 
-var peopleColumns = columnSize(peopleLinesArray);
-console.log(peopleColumns);
-
 function whiteSpace(word, columnLength){
   var string = word;
   for (var i = word.length; i <= columnLength; i++) {
     string += ' ';
   }
-  return string + '|';
+  return string;
 }
 
-console.log(whiteSpace('test', 8)+whiteSpace('test', 8));
+function underline(array){
+  var secondLine = '';
+  var distance = 0;
+  for (var i = 0; i < array.length; i++) {
+    distance += array[i];
+  }
+  for (var j = 0; j < distance+(array.length*2)-2; j++) {
+    secondLine += '_';
+  } return secondLine;
+}
 
 
-//try to output the grid system first, use the setCharAt, with the output from columnSize
+function printGrid(columnArray, wordArray){
+  var gridArray = [];
+  var lineString = '';
+  for (var i = 0; i < wordArray.length; i++) {
+    if(i === 1){
+      lineString += underline(columnArray) + '\n';
+    }
+    for (var j = 0; j < columnArray.length; j++) {
+      if(j === columnArray.length-1){
+      lineString += whiteSpace(wordArray[i][j], columnArray[j]);
+      lineString += '\n';
+      } else {
+      lineString += whiteSpace(wordArray[i][j], columnArray[j]) +'|';
+     }
+    }
+  } gridArray.push(lineString);
+    return lineString;
+}
 
-// function makeGrid(array, lines){
-//   var ca = 0;
-//   var grid = [];
-//   for (var i = 0; i < lines.length; i++) {
-//     for (var j = 0; j < array.length; j++) {
-//       grid.push(array[j], '|');
-//       ca += array[j];
-//      }
-//   } console.log(grid);
-// }
+function printFullGrid(string){
+  var stringLines = splitToLines(string);
+  var stringLinesArray = sortByLines(stringLines);
+  var columns = columnSize(stringLinesArray);
+  return printGrid(columns, stringLinesArray);
+}
 
-// makeGrid(peopleColumns);
+console.log(printFullGrid(people));
+console.log(printFullGrid(companies));
+// console.log(printFullGrid(stretchCompanies));
 
-//create strings
+
