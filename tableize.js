@@ -1,4 +1,5 @@
 var data = require('./strings');
+var fs = require('fs');
 var people = data.mvp.people;
 var companies = data.mvp.companies;
 var stretchCompanies = data.stretch.companies;
@@ -12,7 +13,7 @@ function splitToLines(string){
 function sortByLines(array){
   var eachWord = [];
   for (var i = 0; i < array.length; i++) {
-    var newArr = array[i].split(',');
+    var newArr = array[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
     eachWord.push(newArr);
   }
   return eachWord;
@@ -80,6 +81,6 @@ function printFullGrid(string){
 
 console.log(printFullGrid(people));
 console.log(printFullGrid(companies));
-// console.log(printFullGrid(stretchCompanies));
+console.log(printFullGrid(stretchCompanies));
 
 
